@@ -1,6 +1,10 @@
 export default function LoadingCourse() {
   return (
-    <div className="loading-state" role="status" aria-live="polite">
+    <div
+      className="grid min-h-[45vh] place-items-center font-mono text-[#627078]"
+      role="status"
+      aria-live="polite"
+    >
       Loading course…
     </div>
   );

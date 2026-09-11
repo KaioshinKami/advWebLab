@@ -11,18 +11,22 @@ export default async function CoursesPage() {
 
   return (
     <section>
-      <div className="page-heading">
+      <div className="mb-14 grid grid-cols-[1fr_minmax(240px,0.55fr)] items-end gap-9 max-[760px]:mb-10 max-[760px]:grid-cols-1">
         <div>
-          <p className="eyebrow">Course catalog</p>
-          <h1>Build a complete web toolkit.</h1>
+          <p className="mb-5 font-mono text-[0.78rem] font-bold uppercase tracking-[0.14em] text-[#b94328]">
+            Course catalog
+          </p>
+          <h1 className="max-w-[850px] text-[clamp(2.7rem,6vw,5.4rem)] font-[650] leading-[0.98] tracking-[-0.065em]">
+            Build a complete web toolkit.
+          </h1>
         </div>
-        <p>
+        <p className="text-[1.06rem] leading-[1.75] text-[#627078]">
           Browse six focused courses that move from interface fundamentals to
           secure backends, data, and applied AI.
         </p>
       </div>
 
-      <div className="course-grid">
+      <div className="grid grid-cols-2 gap-[18px] max-[760px]:grid-cols-1">
         {courses.map((course) => (
           <CourseCard
             key={course.id}
