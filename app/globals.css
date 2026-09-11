@@ -1,26 +1,412 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f1e8;
+  --surface: #fffdf8;
+  --foreground: #172126;
+  --muted: #627078;
+  --line: #d8d1c5;
+  --accent: #b94328;
+  --accent-dark: #8f2f1a;
+  --teal: #234e52;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--background) 92%, white 8%);
+}
+
+.site-nav,
+.page-shell,
+.site-footer {
+  width: min(1120px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.site-nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal);
+  color: white;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 4vw, 34px);
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.nav-links a {
+  padding-block: 10px;
+  transition: color 160ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--accent);
+}
+
+.page-shell {
+  min-height: calc(100vh - 154px);
+  padding-block: clamp(52px, 8vw, 96px);
+}
+
+.hero {
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: clamp(52px, 9vw, 120px);
+}
+
+.eyebrow {
+  margin-bottom: 20px;
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h1,
+.page-heading h1,
+.course-detail h1 {
+  max-width: 850px;
+  font-size: clamp(2.8rem, 7vw, 6.4rem);
+  font-weight: 650;
+  line-height: 0.98;
+  letter-spacing: -0.065em;
+}
+
+.hero-text {
+  max-width: 640px;
+  margin-top: 30px;
+  color: var(--muted);
+  font-size: clamp(1.06rem, 2vw, 1.28rem);
+  line-height: 1.7;
+}
+
+.primary-link,
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 34px;
+  color: var(--accent);
+  font-weight: 750;
+}
+
+.primary-link span {
+  transition: transform 160ms ease;
+}
+
+.primary-link:hover span,
+.primary-link:focus-visible span {
+  transform: translateX(5px);
+}
+
+.hero-note {
+  padding-top: 22px;
+  border-top: 2px solid var(--foreground);
+}
+
+.hero-note-number {
+  display: block;
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 650;
+  line-height: 1;
+}
+
+.hero-note p {
+  max-width: 250px;
+  margin-top: 16px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.page-heading {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 0.55fr);
+  align-items: end;
+  gap: 36px;
+  margin-bottom: 56px;
+}
+
+.page-heading h1,
+.course-detail h1 {
+  font-size: clamp(2.7rem, 6vw, 5.4rem);
+}
+
+.page-heading > p:last-child,
+.about-copy p,
+.course-description {
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.75;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.course-card {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.course-card:hover,
+.course-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
+  box-shadow: 0 18px 45px rgb(23 33 38 / 8%);
+  outline: none;
+}
+
+.course-card-top,
+.course-card-footer,
+.course-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.course-index,
+.course-credits,
+.detail-label {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.course-card h2 {
+  margin-top: 32px;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.course-card-description {
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.course-card-footer {
+  margin-top: auto;
+  padding-top: 26px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.course-card-footer span:last-child {
+  color: var(--accent);
+}
+
+.course-detail {
+  max-width: 900px;
+}
+
+.course-detail h1 {
+  margin-top: 22px;
+}
+
+.course-description {
+  max-width: 720px;
+  margin-top: 30px;
+}
+
+.course-meta {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.course-meta-item,
+.like-button {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 18px;
+  border-radius: 999px;
+}
+
+.course-meta-item {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.like-button {
+  border: 0;
+  background: var(--accent);
+  color: white;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.like-button:hover,
+.like-button:focus-visible {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+.about-copy {
+  max-width: 760px;
+}
+
+.about-copy p + p {
+  margin-top: 22px;
+}
+
+.loading-state {
+  min-height: 45vh;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.not-found {
+  max-width: 680px;
+  padding-top: 8vh;
+}
+
+.not-found h1 {
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.not-found p {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+.site-footer {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 760px) {
+  .site-nav {
+    min-height: 68px;
+  }
+
+  .brand > span:last-child {
+    display: none;
+  }
+
+  .hero,
+  .page-heading,
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: 0;
+    align-items: start;
+  }
+
+  .hero-note {
+    max-width: 280px;
+  }
+
+  .page-heading {
+    margin-bottom: 40px;
+  }
+
+  .course-card {
+    min-height: 235px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
