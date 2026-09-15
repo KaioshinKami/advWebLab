@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Course Compass",
+    default: "Lab1",
     template: "%s | Course Compass",
   },
   description:
@@ -24,13 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               className="inline-flex items-center gap-3 font-[750] tracking-[-0.02em] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b94328]"
               href="/"
             >
-              <span
-                className="grid size-[38px] place-items-center rounded-full bg-[#234e52] font-mono text-xs font-bold tracking-[0.08em] text-white"
-                aria-hidden="true"
-              >
-                CC
-              </span>
-              <span className="max-[760px]:hidden">Course Compass</span>
+              <span className="max-[760px]:hidden">Lab1</span>
             </Link>
 
             <div className="flex items-center gap-[clamp(16px,4vw,34px)] text-[0.92rem] font-[650] text-[#627078]">
