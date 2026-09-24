@@ -1,7 +1,7 @@
 export default function LoadingCourse() {
   return (
     <div
-      className="grid min-h-[45vh] place-items-center font-mono text-[#627078]"
+      className="grid min-h-[45vh] place-items-center font-mono text-[#627078] dark:text-slate-300"
       role="status"
       aria-live="polite"
     >

@@ -12,6 +12,11 @@ shadcn `Card` and `Button` components, the course list adapts from one to two
 to three columns, and the shared navigation has spacing, separation, and hover
 states.
 
+All optional Lab 2 bonuses are also included: a custom `course-accent` Tailwind
+color, system-aware dark mode for the cards and navigation, a custom `course`
+button variant, and the additional shadcn/ui `Badge` component for course
+credits.
+
 ## Routes
 
 - `/` — home page

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,15 +25,22 @@ export default function CourseCard({
 }: CourseCardProps) {
   return (
     <Link className="block h-full rounded-xl" href={`/courses/${id}`}>
-      <Card className="h-full border border-transparent transition hover:border-blue-300 hover:shadow-md">
+      <Card className="h-full border border-transparent transition hover:border-blue-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500">
         <CardHeader>
           <CardTitle className="text-lg">{title}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-1 flex-col gap-3">
-          <p className="leading-6 text-muted-foreground">{description}</p>
+          <p className="leading-6 text-muted-foreground dark:text-slate-300">
+            {description}
+          </p>
           <div className="mt-auto flex items-center justify-between gap-3">
-            <span className="text-sm font-medium">{credits} credits</span>
-            <Button variant="ghost" size="sm" type="button">
+            <Badge variant="secondary">{credits} credits</Badge>
+            <Button
+              variant="ghost"
+              size="sm"
+              type="button"
+              className="dark:hover:bg-slate-800 dark:hover:text-white"
+            >
               ♥ {likes}
             </Button>
           </div>
