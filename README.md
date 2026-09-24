@@ -5,6 +5,13 @@ Technologies lab. It demonstrates the Next.js 16 App Router, typed dynamic
 routes, Server Components, a focused Client Component, and mock asynchronous
 data loading.
 
+## Lab 2 styling
+
+The catalog is styled with Tailwind CSS and shadcn/ui. Course cards use the
+shadcn `Card` and `Button` components, the course list adapts from one to two
+to three columns, and the shared navigation has spacing, separation, and hover
+states.
+
 ## Routes
 
 - `/` — home page

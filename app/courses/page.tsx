@@ -26,16 +26,9 @@ export default async function CoursesPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-[18px] max-[760px]:grid-cols-1">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            id={course.id}
-            title={course.title}
-            description={course.description}
-            credits={course.credits}
-            likes={course.likes}
-          />
+          <CourseCard key={course.id} {...course} />
         ))}
       </div>
     </section>

@@ -14,47 +14,38 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-[#f6f1e8] text-[#172126] [font-family:Arial,Helvetica,sans-serif]">
-        <header className="border-b border-[#d8d1c5] bg-[#f8f4ec]">
+      <body className="min-h-full bg-slate-50 text-slate-900">
+        <header className="border-b border-slate-200 bg-white">
           <nav
-            className="mx-auto flex min-h-[76px] w-[min(1120px,calc(100%-40px))] items-center justify-between gap-6 max-[760px]:min-h-[68px]"
+            className="mx-auto flex w-full max-w-6xl gap-4 px-6 py-4"
             aria-label="Main navigation"
           >
             <Link
-              className="inline-flex items-center gap-3 font-[750] tracking-[-0.02em] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b94328]"
+              className="rounded-md px-3 py-2 transition-colors hover:bg-slate-100 hover:text-blue-600"
               href="/"
             >
-              <span className="max-[760px]:hidden">Lab1</span>
+              Home
             </Link>
-
-            <div className="flex items-center gap-[clamp(16px,4vw,34px)] text-[0.92rem] font-[650] text-[#627078]">
-              <Link
-                className="py-2.5 transition-colors hover:text-[#b94328] focus-visible:rounded-sm focus-visible:text-[#b94328] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b94328] motion-reduce:transition-none"
-                href="/"
-              >
-                Home
-              </Link>
-              <Link
-                className="py-2.5 transition-colors hover:text-[#b94328] focus-visible:rounded-sm focus-visible:text-[#b94328] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b94328] motion-reduce:transition-none"
-                href="/courses"
-              >
-                Courses
-              </Link>
-              <Link
-                className="py-2.5 transition-colors hover:text-[#b94328] focus-visible:rounded-sm focus-visible:text-[#b94328] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b94328] motion-reduce:transition-none"
-                href="/about"
-              >
-                About
-              </Link>
-            </div>
+            <Link
+              className="rounded-md px-3 py-2 transition-colors hover:bg-slate-100 hover:text-blue-600"
+              href="/courses"
+            >
+              Courses
+            </Link>
+            <Link
+              className="rounded-md px-3 py-2 transition-colors hover:bg-slate-100 hover:text-blue-600"
+              href="/about"
+            >
+              About
+            </Link>
           </nav>
         </header>
 
-        <main className="mx-auto min-h-[calc(100vh-154px)] w-[min(1120px,calc(100%-40px))] py-[clamp(52px,8vw,96px)]">
+        <main className="mx-auto min-h-[calc(100vh-146px)] w-full max-w-6xl px-6 py-[clamp(48px,8vw,88px)]">
           {children}
         </main>
 
-        <footer className="mx-auto flex min-h-[78px] w-[min(1120px,calc(100%-40px))] items-center border-t border-[#d8d1c5] text-[0.82rem] text-[#627078]">
+        <footer className="mx-auto flex min-h-[74px] w-full max-w-6xl items-center border-t border-slate-200 px-6 text-sm text-slate-500">
           <p>Advanced Web Technologies · Semester course catalog</p>
         </footer>
       </body>
