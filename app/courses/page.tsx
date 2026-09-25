@@ -20,10 +20,6 @@ export default async function CoursesPage() {
             Build a complete web toolkit.
           </h1>
         </div>
-        <p className="text-[1.06rem] leading-[1.75] text-[#627078] dark:text-slate-300">
-          Browse six focused courses that move from interface fundamentals to
-          secure backends, data, and applied AI.
-        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
