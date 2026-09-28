@@ -36,7 +36,7 @@ export default function CourseCard({
           <div className="mt-auto flex items-center justify-between gap-3">
             <Badge variant="secondary">{credits} credits</Badge>
             <Button
-              variant="secondary"
+              variant="default"
               size="lg"
               type="button"
               className="dark:hover:bg-slate-800 dark:hover:text-white"
