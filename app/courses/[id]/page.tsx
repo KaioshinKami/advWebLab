@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { EnrollForm } from "@/components/EnrollForm";
 import LikeButton from "@/components/LikeButton";
-import { getCourse, getCourses } from "@/lib/courses";
+import { getCourse } from "@/lib/courses";
 
 type CoursePageProps = {
   params: Promise<{ id: string }>;
 };
-
-export async function generateStaticParams() {
-  const courses = await getCourses();
-
-  return courses.map((course) => ({ id: course.id }));
-}
 
 export async function generateMetadata({
   params,
@@ -51,8 +46,13 @@ export default async function CoursePage({ params }: CoursePageProps) {
           </span>
           <strong>{course.credits}</strong>
         </div>
-        <LikeButton initialLikes={course.likes} />
+        <LikeButton courseId={course.id} initialLikes={course.likes} />
       </div>
+
+      <section className="mt-12">
+        <h2 className="mb-4 text-2xl font-bold">Enroll in this course</h2>
+        <EnrollForm courseId={course.id} />
+      </section>
     </article>
   );
 }

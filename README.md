@@ -1,39 +1,110 @@
 # Course Compass
 
-Course Compass is a small course catalog built for the first Advanced Web
-Technologies lab. It demonstrates the Next.js 16 App Router, typed dynamic
-routes, Server Components, a focused Client Component, and mock asynchronous
-data loading.
+Course Compass is a Next.js course catalog. In Lab 5 it was connected to the
+FastAPI backend: Server Components load current course data from the API, while
+Client Components send filtering, like, and enrollment requests from the
+browser.
 
-## Lab 2 styling
+## How to run both projects
 
-The catalog is styled with Tailwind CSS and shadcn/ui. Course cards use the
-shadcn `Card` and `Button` components, the course list adapts from one to two
-to three columns, and the shared navigation has spacing, separation, and hover
-states.
+Start the backend first:
 
-All optional Lab 2 bonuses are also included: a custom `course-accent` Tailwind
-color, system-aware dark mode for the cards and navigation, a custom `course`
-button variant, and the additional shadcn/ui `Badge` component for course
-credits.
+```bash
+cd course-catalog-api
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+fastapi dev main.py
+```
+
+Then start the frontend in a second terminal:
+
+```bash
+cd course-catalog
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000>. The backend must be running at
+<http://localhost:8000>.
+
+## Environment variables
+
+Create `.env.local` in the `course-catalog` root:
+
+```dotenv
+API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+`API_URL` is used only by Server Components. `NEXT_PUBLIC_API_URL` is included
+in browser JavaScript and is used by Client Components, so it must not contain
+secrets. The `.env.local` file is ignored by Git.
 
 ## Routes
 
 - `/` — home page
 - `/about` — project overview
-- `/courses` — server-rendered course list
-- `/courses/[id]` — statically generated course detail page
-- `/courses/does-not-exist` — custom course not-found state
+- `/courses` — course list loaded by the Next.js server from FastAPI
+- `/courses/[id]` — current course details, server-backed like, and enrollment
+- `/filter` — browser-side SWR filter for elective courses
+- `/courses/does-not-exist` — custom not-found state
 
-## Run locally
+## Decisions
 
-```bash
-npm install
-npm run dev
-```
+`generateStaticParams` was removed because the course list now belongs to the
+backend and can change without a frontend rebuild. Removing it also allows
+`npm run build` to pass while the backend is stopped; `cache: "no-store"` keeps
+the course pages dynamic and current.
 
-Open [http://localhost:3000](http://localhost:3000). The development server may
-choose the next available port if port 3000 is already in use.
+The like is a simple POST with no body or special request headers, so the
+browser sends it without a preflight. Enrollment sends JSON with
+`Content-Type: application/json`, so the browser first sends an OPTIONS
+preflight to check the CORS permission.
+
+## Breakage journal
+
+### Breakage 1: CORS middleware removed
+
+- What I did: commented out the complete `app.add_middleware(...)` block.
+- Console: `No 'Access-Control-Allow-Origin' header is present on the requested resource`.
+- Network: browser GET and like POST were marked as CORS errors even though the backend logged 200; enrollment OPTIONS returned 405 and the POST was not sent; the Server Component `/courses` page still worked.
+- Cause: FastAPI returned no CORS permission headers because the middleware was not connected.
+- How I found it: checked the missing response header, then saw that OPTIONS returned 405 at step 4 of the diagnostic algorithm.
+
+### Breakage 2: trailing slash in the allowed origin
+
+- What I did: changed the allowed origin to `http://localhost:3000/`.
+- Console: `No 'Access-Control-Allow-Origin' header is present on the requested resource`.
+- Network: browser GET and like POST were blocked; enrollment OPTIONS returned 400 with `Disallowed CORS origin` and its POST was not sent.
+- Cause: an origin contains only scheme, host, and port; the trailing slash made it different from `http://localhost:3000`.
+- How I found it: compared the page origin and `allow_origins` character for character at step 3.
+
+### Breakage 3: allowed methods removed
+
+- What I did: removed `allow_methods=["*"]` from the CORS configuration.
+- Console: the enrollment reported that the preflight response did not have an HTTP OK status.
+- Network: the filter GET and simple like POST worked; enrollment OPTIONS returned 400 with `Disallowed CORS method`, so the POST was not sent.
+- Cause: CORSMiddleware allows only GET by default, but the preflight requested permission for POST.
+- How I found it: inspected the OPTIONS status and response body at step 4.
+
+### Breakage 4: frontend opened from another origin
+
+- What I did: temporarily allowed the Next.js dev host and opened the frontend at `http://127.0.0.1:3000` while FastAPI allowed only `http://localhost:3000`.
+- Console: a request from origin `http://127.0.0.1:3000` was blocked because no matching allow-origin header was present.
+- Network: browser requests were marked as CORS errors while the backend logged successful requests; Server Component course pages still loaded.
+- Cause: `localhost` and `127.0.0.1` are different hosts and therefore different origins.
+- How I found it: compared the Origin request header with `allow_origins` at step 3.
+
+### Breakage 5: Python error that looked like CORS
+
+- What I did: temporarily changed `p["offset"]` to `p["ofset"]` in `list_courses`.
+- Console: the filter showed the familiar missing allow-origin message.
+- Network: browser GET `/courses` was a CORS error; like and enrollment still worked; the Server Component `/courses` page showed `error.tsx`.
+- Cause: the route raised `KeyError: 'ofset'` and returned 500 before CORS headers were added; CORS configuration itself was correct.
+- How I found it: the backend terminal showed a 500 traceback at step 5 of the diagnostic algorithm.
+
+All five temporary breakages were restored. The final code contains the working
+CORS and API configuration.
 
 ## Quality checks
 

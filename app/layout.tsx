@@ -34,6 +34,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </Link>
             <Link
               className="rounded-md px-3 py-2 transition-colors hover:bg-slate-100 hover:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-300"
+              href="/filter"
+            >
+              Filter
+            </Link>
+            <Link
+              className="rounded-md px-3 py-2 transition-colors hover:bg-slate-100 hover:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-300"
               href="/about"
             >
               About
