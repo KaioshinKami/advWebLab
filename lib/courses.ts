@@ -1,17 +1,7 @@
-export type Course = {
-  id: string;
-  title: string;
-  description: string;
-  credits: number;
-  isElective: boolean;
-  likes: number;
-};
+import type { components } from "@/lib/schema";
 
-export type Enrollment = {
-  id: number;
-  courseId: string;
-  studentName: string;
-};
+export type Course = components["schemas"]["Course"];
+export type Enrollment = components["schemas"]["Enrollment"];
 
 const API_URL = process.env.API_URL;
 if (!API_URL) throw new Error("API_URL is not set: create .env.local");

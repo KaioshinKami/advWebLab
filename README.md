@@ -61,6 +61,45 @@ browser sends it without a preflight. Enrollment sends JSON with
 `Content-Type: application/json`, so the browser first sends an OPTIONS
 preflight to check the CORS permission.
 
+## Bonus tasks
+
+### OpenAPI-generated TypeScript types
+
+`lib/schema.d.ts` was generated from the backend OpenAPI schema. The frontend
+imports `Course` and `Enrollment` from that file instead of maintaining manual
+copies of the API models. With the backend running, regenerate the types after
+an API model change:
+
+```bash
+npx openapi-typescript http://localhost:8000/openapi.json -o lib/schema.d.ts
+```
+
+As an experiment, the backend field `likes` was temporarily renamed to
+`like_count`. Regeneration changed the JSON type to `likeCount`, and
+`npx tsc --noEmit` found all three stale frontend uses of `likes`. The original
+backend field was restored after the experiment.
+
+### Next.js rewrite experiment
+
+A temporary Next.js rewrite forwarded `/api/:path*` to the FastAPI server. The
+frontend successfully loaded `/api/courses` with the backend CORS middleware
+removed because the browser then contacted the same Next.js origin. The final
+project uses direct browser requests again so that the laboratory's CORS
+requirements remain visible and testable.
+
+### Fetch-cache experiment
+
+Removing `{ cache: "no-store" }` made `/courses` a static (`○`) route during a
+production build. Its generated HTML kept 21 likes even after the live API had
+23. The option was restored, so `/courses` is again dynamic (`ƒ`) and does not
+serve frozen catalog data.
+
+### Backend configuration bonuses
+
+The backend reads its allowed frontend origins from `CORS_ORIGINS` and uses
+explicit CORS method and header lists. See the backend README for configuration
+examples.
+
 ## Breakage journal
 
 ### Breakage 1: CORS middleware removed
