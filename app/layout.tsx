@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,6 +44,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               href="/about"
             >
               About
+            </Link>
+            <Link
+              className={`${buttonVariants({ variant: "course", size: "lg" })} ml-auto`}
+              href="/courses"
+              title="Open the course catalog"
+            >
+              Browse courses
             </Link>
           </nav>
         </header>
