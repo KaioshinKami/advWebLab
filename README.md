@@ -29,7 +29,9 @@ Open <http://localhost:3000>. The backend must be running at
 
 ## Environment variables
 
-Create `.env.local` in the `course-catalog` root:
+Local development works without an env file and defaults to
+`http://localhost:8000`. To use another backend address, copy `.env.example`
+to `.env.local` and override the values:
 
 ```dotenv
 API_URL=http://localhost:8000
@@ -38,7 +40,8 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 `API_URL` is used only by Server Components. `NEXT_PUBLIC_API_URL` is included
 in browser JavaScript and is used by Client Components, so it must not contain
-secrets. The `.env.local` file is ignored by Git.
+secrets. The `.env.local` file is ignored by Git; `.env.example` only documents
+the supported variables.
 
 ## Routes
 

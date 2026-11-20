@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Course } from "@/lib/courses";
 
-const API = process.env.NEXT_PUBLIC_API_URL;
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 type LikeButtonProps = {
   courseId: string;

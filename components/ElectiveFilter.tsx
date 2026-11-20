@@ -4,7 +4,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import type { Course } from "@/lib/courses";
 
-const API = process.env.NEXT_PUBLIC_API_URL;
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 async function fetcher(url: string): Promise<Course[]> {
   const res = await fetch(url);

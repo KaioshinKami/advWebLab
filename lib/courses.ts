@@ -1,15 +1,11 @@
 import type { components } from "@/lib/schema";
+import { API_URL, getJson } from "@/lib/api";
 
 export type Course = components["schemas"]["Course"];
 export type Enrollment = components["schemas"]["Enrollment"];
 
-const API_URL = process.env.API_URL;
-if (!API_URL) throw new Error("API_URL is not set: create .env.local");
-
 export async function getCourses(): Promise<Course[]> {
-  const res = await fetch(`${API_URL}/courses`, { cache: "no-store" });
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
-  return res.json();
+  return getJson<Course[]>("/courses");
 }
 
 export async function getCourse(id: string): Promise<Course | undefined> {

@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import type { Enrollment } from "@/lib/courses";
 
-const API = process.env.NEXT_PUBLIC_API_URL;
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 type EnrollFormProps = {
   courseId: string;
